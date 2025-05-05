@@ -206,10 +206,12 @@ server.register(staticFiles, {
 });
 
 // Register routes
-server.register(mapRoutes, { prefix: '/maps' });
-server.register(commandRoutes, { prefix: '/commands' });
-server.register(commandSetRoutes, { prefix: '/command-sets' });
-server.register(robotRoutes, { prefix: '/robots' });
+server.after(() => {
+  server.register(mapRoutes, { prefix: '/maps' });
+  server.register(commandRoutes, { prefix: '/commands' });
+  server.register(commandSetRoutes, { prefix: '/command-sets' });
+  server.register(robotRoutes, { prefix: '/robots' });
+});
 
 // Root route for frontend
 server.get('/', (request, reply) => {

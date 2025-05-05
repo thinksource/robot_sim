@@ -38,29 +38,8 @@ export async function mapRoutes(fastify: FastifyInstance) {
         }
       },
       response: {
-        200: {
-          type: 'object',
-          properties: {
-            id: { type: 'string', format: 'uuid' },
-            name: { type: 'string' },
-            width: { type: 'integer', minimum: 1 },
-            height: { type: 'integer', minimum: 1 },
-            terrain: { 
-              type: 'array', 
-              items: {
-                type: 'array',
-                items: { type: 'string', enum: ['flat', 'rocky', 'crater', 'slope'] }
-              }
-            },
-            createdAt: { type: 'string', format: 'date-time' }
-          }
-        },
-        404: {
-          type: 'object',
-          properties: {
-            error: { type: 'string' }
-          }
-        }
+        200: { $ref: '#/components/schemas/Map' },
+        404: { $ref: '#/components/schemas/Error' }
       }
     }
   };
@@ -82,46 +61,10 @@ export async function mapRoutes(fastify: FastifyInstance) {
     schema: {
       tags: ['maps'],
       description: 'Create a new map',
-      body: {
-        type: 'object',
-        properties: {
-          name: { type: 'string' },
-          width: { type: 'integer', minimum: 1 },
-          height: { type: 'integer', minimum: 1 },
-          terrain: {
-            type: 'array',
-            items: {
-              type: 'array',
-              items: { type: 'string', enum: ['flat', 'rocky', 'crater', 'slope'] }
-            }
-          }
-        },
-        required: ['name', 'width', 'height']
-      },
+      body: { $ref: '#/components/schemas/CreateMapDto' },
       response: {
-        201: {
-          type: 'object',
-          properties: {
-            id: { type: 'string', format: 'uuid' },
-            name: { type: 'string' },
-            width: { type: 'integer', minimum: 1 },
-            height: { type: 'integer', minimum: 1 },
-            terrain: { 
-              type: 'array', 
-              items: {
-                type: 'array',
-                items: { type: 'string', enum: ['flat', 'rocky', 'crater', 'slope'] }
-              }
-            },
-            createdAt: { type: 'string', format: 'date-time' }
-          }
-        },
-        400: {
-          type: 'object',
-          properties: {
-            error: { type: 'string' }
-          }
-        }
+        201: { $ref: '#/components/schemas/Map' },
+        400: { $ref: '#/components/schemas/Error' }
       }
     }
   };
@@ -155,45 +98,10 @@ export async function mapRoutes(fastify: FastifyInstance) {
           id: { type: 'string', format: 'uuid', description: 'Map ID' }
         }
       },
-      body: {
-        type: 'object',
-        properties: {
-          name: { type: 'string' },
-          width: { type: 'integer', minimum: 1 },
-          height: { type: 'integer', minimum: 1 },
-          terrain: {
-            type: 'array',
-            items: {
-              type: 'array',
-              items: { type: 'string', enum: ['flat', 'rocky', 'crater', 'slope'] }
-            }
-          }
-        }
-      },
+      body: { $ref: '#/components/schemas/CreateMapDto' },
       response: {
-        200: {
-          type: 'object',
-          properties: {
-            id: { type: 'string', format: 'uuid' },
-            name: { type: 'string' },
-            width: { type: 'integer', minimum: 1 },
-            height: { type: 'integer', minimum: 1 },
-            terrain: { 
-              type: 'array', 
-              items: {
-                type: 'array',
-                items: { type: 'string', enum: ['flat', 'rocky', 'crater', 'slope'] }
-              }
-            },
-            createdAt: { type: 'string', format: 'date-time' }
-          }
-        },
-        404: {
-          type: 'object',
-          properties: {
-            error: { type: 'string' }
-          }
-        }
+        200: { $ref: '#/components/schemas/Map' },
+        404: { $ref: '#/components/schemas/Error' }
       }
     }
   };
@@ -229,12 +137,7 @@ export async function mapRoutes(fastify: FastifyInstance) {
           type: 'null',
           description: 'Map successfully deleted'
         },
-        404: {
-          type: 'object',
-          properties: {
-            error: { type: 'string' }
-          }
-        }
+        404: { $ref: '#/components/schemas/Error' }
       }
     }
   };
